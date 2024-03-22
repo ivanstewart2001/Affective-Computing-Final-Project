@@ -18,7 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { STRESS_SURVEY_QUESTIONS } from "@/utils/survey-questions/stress";
 import { useState } from "react";
 
 interface ActivityWrapperProps {
@@ -35,6 +34,7 @@ interface ActivityWrapperProps {
   postSurveyCompleted: boolean;
   ended: boolean;
   setEnded: React.Dispatch<React.SetStateAction<boolean>>;
+  surveyData: string[];
   children: React.ReactNode;
 }
 
@@ -52,6 +52,7 @@ function ActivityWrapperWithTimer({
   postSurveyCompleted,
   preSurveyCompleted,
   ended,
+  surveyData,
   setEnded,
 }: ActivityWrapperProps) {
   const router = useRouter();
@@ -67,7 +68,7 @@ function ActivityWrapperWithTimer({
       function QuestionOne() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[0]}</h1>
+            <h1 className="text-lg">{surveyData[0]}</h1>
 
             <RadioGroup
               defaultValue="1"
@@ -109,7 +110,7 @@ function ActivityWrapperWithTimer({
       function QuestionTwo() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[1]}</h1>
+            <h1 className="text-lg">{surveyData[1]}</h1>
 
             <RadioGroup
               defaultValue="1"
@@ -151,7 +152,7 @@ function ActivityWrapperWithTimer({
       function QuestionThree() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[2]}</h1>
+            <h1 className="text-lg">{surveyData[2]}</h1>
 
             <RadioGroup
               defaultValue="1"
@@ -241,7 +242,7 @@ function ActivityWrapperWithTimer({
       function QuestionOne() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[0]}</h1>
+            <h1 className="text-lg">{surveyData[0]}</h1>
 
             <RadioGroup
               defaultValue="1"
@@ -283,7 +284,7 @@ function ActivityWrapperWithTimer({
       function QuestionTwo() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[1]}</h1>
+            <h1 className="text-lg">{surveyData[1]}</h1>
 
             <RadioGroup
               defaultValue="1"
@@ -325,7 +326,7 @@ function ActivityWrapperWithTimer({
       function QuestionThree() {
         return (
           <div className="flex flex-col space-y-4 items-center">
-            <h1 className="text-lg">{STRESS_SURVEY_QUESTIONS[2]}</h1>
+            <h1 className="text-lg">{surveyData[2]}</h1>
 
             <RadioGroup
               defaultValue="1"

@@ -2,23 +2,22 @@ import ActivityWrapperWithTimer from "@/custom-components/ActivityWrapperWithTim
 import { STRESS_SURVEY_QUESTIONS } from "@/utils/survey-questions/stress";
 import React, { useEffect, useRef, useState } from "react";
 
-const millisecondsPerStep = 20000;
+const millisecondsPerStep = 15000;
 const steps = [
-  "Begin by setting your intention for this meditation. Take a moment to reflect on what you hope to gain from this experience and what you'd like to focus on.",
-  "Imagine yourself standing barefoot on a lush green meadow. Feel the soft grass beneath your feet and the warm sun on your skin. With each breath, feel yourself becoming more rooted and grounded in the present moment.",
-  "Visualize a serene pathway leading you deeper into the heart of a tranquil forest. As you walk along the path, notice the sights, sounds, and smells of nature surrounding you. Allow yourself to let go of any tension or stress with each step you take.",
-  "Find a comfortable spot in the forest to rest and observe your surroundings. Listen to the gentle rustle of leaves, the chirping of birds, and the babbling of a nearby stream. Feel a sense of peace and connection with the natural world around you.",
-  "Imagine yourself holding a small bundle of worries and concerns in your hands. With each breath, visualize releasing these burdens into a nearby river, watching them float away downstream. Feel a sense of lightness and relief as you let go of what no longer serves you.",
-  "Visualize yourself arriving at a tranquil sanctuary deep within the forest. This sanctuary is a place of inner peace and serenity, where you can retreat whenever you need to find balance and clarity. Take a moment to explore this sacred space and make it your own.",
-  "Reflect on the journey you've taken during this meditation. Express gratitude for the opportunity to connect with yourself and the natural world. Notice any insights or revelations that have emerged during the practice.",
-  "Slowly begin to bring your awareness back to the present moment. Wiggle your fingers and toes, take a deep breath, and gently open your eyes. Carry the sense of peace and tranquility you've cultivated with you as you go about your day.",
+  "Take a moment to find a comfortable sitting or lying position. Close your eyes gently and bring your attention to your breath.",
+  "Inhale deeply through your nose, filling your lungs with air. Feel your chest and abdomen expand as you breathe in.",
+  "Hold your breath for a moment at the top of your inhale. Allow yourself to fully experience the sensation of being filled with air.",
+  "Exhale slowly and completely through your mouth, emptying your lungs of air. Feel your chest and abdomen contract as you breathe out.",
+  "Pause for a moment at the bottom of your exhale. Notice the stillness and calmness that follows each breath.",
+  "Repeat the cycle of deep inhales, brief holds, slow exhales, and pauses. Focus on the rhythm of your breath and let go of any tension or distractions.",
+  "After several cycles of deep breathing, gradually bring your awareness back to your surroundings. Take a moment to notice how you feel after completing the exercise.",
 ];
-// 20*8 = 160 seconds
+// 20*7 = 140 seconds
 const numberOfSeconds = (millisecondsPerStep / 1000) * steps.length;
-const videoId = "UV0mhY2Dxr0";
+const videoId = "vNeRn90QjyA";
 const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
 
-function GuidedMeditation() {
+function BreathingExercise() {
   const [timer, setTimer] = useState(numberOfSeconds); // Initial timer value: 105 seconds
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const timeoutIds = useRef<NodeJS.Timeout[]>([]); // Store all timeout IDs
@@ -42,7 +41,7 @@ function GuidedMeditation() {
 
     return () => {
       if (!isFirstRender.current) {
-        console.log("Unmounting guided meditation component");
+        console.log("Unmounting breathing exercise component");
 
         resetMeditation();
       }
@@ -50,7 +49,7 @@ function GuidedMeditation() {
   }, []);
 
   function startMeditation() {
-    const backgroundAudioFile = "/assets/audio/birds-chirping.mp3";
+    const backgroundAudioFile = "/assets/audio/ocean-waves.mp3";
     const audio = new Audio(backgroundAudioFile);
     audio.loop = true;
     audio.volume = 0.5;
@@ -83,7 +82,7 @@ function GuidedMeditation() {
   }
 
   if (timer === 0) {
-    console.log("Meditation session completed.");
+    console.log("Breathing exercise session completed.");
     resetMeditationIntervals();
   }
 
@@ -126,8 +125,8 @@ function GuidedMeditation() {
 
   return (
     <ActivityWrapperWithTimer
-      title="Guided Meditation"
-      subTitle="Click the start button to begin the guided meditation session."
+      title="Breathing Exercise"
+      subTitle="Click the start button to begin the breathing exercise session."
       startFunction={startMeditation}
       endFunction={resetMeditation}
       startCondition={timer === numberOfSeconds}
@@ -157,4 +156,4 @@ function GuidedMeditation() {
   );
 }
 
-export default GuidedMeditation;
+export default BreathingExercise;
