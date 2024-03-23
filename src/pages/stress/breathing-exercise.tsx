@@ -3,21 +3,22 @@ import Header from "@/custom-components/Header";
 import { STRESS_SURVEY_QUESTIONS } from "@/utils/survey-questions/stress";
 import React, { useEffect, useRef, useState } from "react";
 
-// 15*7 = 105 seconds
-const numberOfSeconds = 105;
+const millisecondsPerStep = 15000;
 const steps = [
-  "Close your eyes and take a deep breath in, filling your lungs with fresh air.",
-  "As you exhale, release any tension or stress from your body.",
-  "Continue to breathe deeply and slowly, letting go of any thoughts or worries.",
-  "Imagine yourself in a peaceful place, surrounded by tranquility and serenity.",
-  "Feel a sense of calmness and relaxation washing over you with each breath.",
-  "Stay in this state of relaxation for the next 15 seconds.",
-  "When you're ready, gently open your eyes and return to the present moment.",
+  "Take a moment to find a comfortable sitting or lying position. Close your eyes gently and bring your attention to your breath.",
+  "Inhale deeply through your nose, filling your lungs with air. Feel your chest and abdomen expand as you breathe in.",
+  "Hold your breath for a moment at the top of your inhale. Allow yourself to fully experience the sensation of being filled with air.",
+  "Exhale slowly and completely through your mouth, emptying your lungs of air. Feel your chest and abdomen contract as you breathe out.",
+  "Pause for a moment at the bottom of your exhale. Notice the stillness and calmness that follows each breath.",
+  "Repeat the cycle of deep inhales, brief holds, slow exhales, and pauses. Focus on the rhythm of your breath and let go of any tension or distractions.",
+  "After several cycles of deep breathing, gradually bring your awareness back to your surroundings. Take a moment to notice how you feel after completing the exercise.",
 ];
+// 20*7 = 140 seconds
+const numberOfSeconds = (millisecondsPerStep / 1000) * steps.length;
 const videoId = "vNeRn90QjyA";
 const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
 
-function GuidedMeditation() {
+function BreathingExercise() {
   const [timer, setTimer] = useState(numberOfSeconds); // Initial timer value: 105 seconds
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const timeoutIds = useRef<NodeJS.Timeout[]>([]); // Store all timeout IDs
@@ -41,7 +42,7 @@ function GuidedMeditation() {
 
     return () => {
       if (!isFirstRender.current) {
-        console.log("Unmounting guided meditation component");
+        console.log("Unmounting breathing exercise component");
 
         resetMeditation();
       }
@@ -75,14 +76,14 @@ function GuidedMeditation() {
         utterance.text = step;
 
         currentSynth.speak(utterance);
-      }, index * 15000); // Speak each step every 15 seconds
+      }, index * millisecondsPerStep); // Speak each step every 15 seconds
 
       timeoutIds.current.push(tid);
     });
   }
 
   if (timer === 0) {
-    console.log("Meditation session completed.");
+    console.log("Breathing exercise session completed.");
     resetMeditationIntervals();
   }
 
@@ -128,8 +129,8 @@ function GuidedMeditation() {
       <Header />
 
       <ActivityWrapperWithTimer
-        title="Guided Meditation"
-        subTitle="Click the start button to begin the guided meditation session."
+        title="Breathing Exercise"
+        subTitle="Click the start button to begin the breathing exercise session."
         startFunction={startMeditation}
         endFunction={resetMeditation}
         startCondition={timer === numberOfSeconds}
@@ -160,4 +161,4 @@ function GuidedMeditation() {
   );
 }
 
-export default GuidedMeditation;
+export default BreathingExercise;
