@@ -1,4 +1,5 @@
 import ActivityWrapperWithTimer from "@/custom-components/ActivityWrapperWithTimer";
+import Header from "@/custom-components/Header";
 import { STRESS_SURVEY_QUESTIONS } from "@/utils/survey-questions/stress";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -124,35 +125,39 @@ function BreathingExercise() {
   }
 
   return (
-    <ActivityWrapperWithTimer
-      title="Breathing Exercise"
-      subTitle="Click the start button to begin the breathing exercise session."
-      startFunction={startMeditation}
-      endFunction={resetMeditation}
-      startCondition={timer === numberOfSeconds}
-      finishedCondition={timer === 0}
-      timer={timer}
-      preSurveyCompleted={preSurveyCompleted}
-      postSurveyCompleted={postSurveyCompleted}
-      setPostSurveyCompleted={setPostSurveyCompleted}
-      setPreSurveyCompleted={setPreSurveyCompleted}
-      ended={ended}
-      surveyData={STRESS_SURVEY_QUESTIONS}
-      setEnded={setEnded}
-    >
-      {timer === 0 ? (
-        <p>Meditation session completed.</p>
-      ) : timer <= numberOfSeconds && preSurveyCompleted ? (
-        <iframe
-          width="560"
-          height="315"
-          src={videoSrc}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      ) : null}
-    </ActivityWrapperWithTimer>
+    <>
+      <Header />
+
+      <ActivityWrapperWithTimer
+        title="Breathing Exercise"
+        subTitle="Click the start button to begin the breathing exercise session."
+        startFunction={startMeditation}
+        endFunction={resetMeditation}
+        startCondition={timer === numberOfSeconds}
+        finishedCondition={timer === 0}
+        timer={timer}
+        preSurveyCompleted={preSurveyCompleted}
+        postSurveyCompleted={postSurveyCompleted}
+        setPostSurveyCompleted={setPostSurveyCompleted}
+        setPreSurveyCompleted={setPreSurveyCompleted}
+        ended={ended}
+        surveyData={STRESS_SURVEY_QUESTIONS}
+        setEnded={setEnded}
+      >
+        {timer === 0 ? (
+          <p>Meditation session completed.</p>
+        ) : timer <= numberOfSeconds && preSurveyCompleted ? (
+          <iframe
+            width="560"
+            height="315"
+            src={videoSrc}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : null}
+      </ActivityWrapperWithTimer>
+    </>
   );
 }
 
