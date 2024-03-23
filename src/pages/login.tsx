@@ -1,29 +1,89 @@
-// LoginPage.js
 import React, { useState } from "react";
 import { Eye } from "lucide-react";
 import { EyeOff } from "lucide-react";
 import Header from "@/custom-components/Header";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
+import toastUtil from "@/utils/toastUtil";
+import { useToast } from "@/components/ui/use-toast";
+import * as Realm from "realm-web";
+import nookies from "nookies";
 
 function LoginPage() {
   const router = useRouter();
 
-  // State for form fields
-  const [username, setUsername] = useState("");
+  const { toast } = useToast();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const loginMutation = useMutation(
+    async () => {
+      const REALM_APP_ID = process.env.NEXT_PUBLIC_REALM_APP_ID;
+
+      if (!REALM_APP_ID) {
+        throw new Error(
+          'Invalid/Missing environment variable: "NEXT_PUBLIC_REALM_APP_ID"'
+        );
+      }
+
+      const app = new Realm.App({
+        id: REALM_APP_ID,
+      });
+
+      const credentials = Realm.Credentials.emailPassword(email, password);
+      await app.logIn(credentials);
+
+      const prefix = `realm-web:app(${REALM_APP_ID})`;
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith(prefix))
+        .forEach((key) => {
+          const value = localStorage.getItem(key);
+
+          if (value) {
+            nookies.set(null, key, value, {
+              httpOnly: false,
+              path: "/",
+            });
+          }
+        });
+    },
+    {
+      onError: (err: Error) => {
+        toastUtil({
+          timeoutMs: 3000,
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          toast,
+          description: err.message,
+        });
+      },
+      onSuccess: async () => {
+        setEmail("");
+        setPassword("");
+
+        router.push("/home");
+      },
+    }
+  );
 
   // Function to handle form submission
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // You can perform login logic here, such as sending the username and password to a backend server for authentication
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Reset form fields after submission
-    setUsername("");
-    setPassword("");
 
-    router.push("/home");
+    if (!email || !password) {
+      toastUtil({
+        timeoutMs: 3000,
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        toast,
+        description: "Please enter your email and password",
+      });
+      return;
+    }
+
+    loginMutation.mutate();
   };
 
   return (
@@ -40,17 +100,17 @@ function LoginPage() {
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="username" className="sr-only">
-                  Username
+                <label htmlFor="email" className="sr-only">
+                  Email
                 </label>
                 <input
-                  id="username"
-                  name="username"
+                  id="email"
+                  name="email"
                   type="text"
-                  autoComplete="username"
+                  autoComplete="email"
                   required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Username"
                 />
