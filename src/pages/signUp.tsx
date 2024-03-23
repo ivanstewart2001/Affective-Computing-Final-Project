@@ -1,30 +1,103 @@
 // SignupPage.js
 import Header from "@/custom-components/Header";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { useToast } from "@/components/ui/use-toast";
+import toastUtil from "@/utils/toastUtil";
 
 function SignupPage() {
-  // State for form fields
+  const router = useRouter();
+
+  const { toast } = useToast();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const signupMutation = useMutation(
+    async () => {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          firstName,
+          lastName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("An error occurred while signing up");
+      }
+
+      return await response.json();
+    },
+    {
+      onError: (err: Error) => {
+        toastUtil({
+          timeoutMs: 3000,
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          toast,
+          description: err.message,
+        });
+      },
+      onSuccess: async () => {
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setFirstName("");
+        setLastName("");
+
+        toastUtil({
+          timeoutMs: 3000,
+          variant: "default",
+          title: "Success!",
+          toast,
+          description: "Account created successfully. Please log in.",
+          func: () => {
+            router.push("/login");
+          },
+        });
+      },
+    }
+  );
+
   // Function to handle form submission
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // You can perform signup logic here, such as sending the form data to a backend server for user creation
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
-    // Reset form fields after submission
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setFirstName("");
-    setLastName("");
+
+    if (!email || !password || !confirmPassword || !firstName || !lastName) {
+      toastUtil({
+        timeoutMs: 3000,
+        variant: "destructive",
+        title: "Please fill in all fields",
+        toast,
+        description: "All fields are required to sign up.",
+      });
+
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toastUtil({
+        timeoutMs: 3000,
+        variant: "destructive",
+        title: "Passwords do not match",
+        toast,
+        description: "Please ensure that the passwords match.",
+      });
+
+      return;
+    }
+
+    signupMutation.mutate();
   };
 
   return (

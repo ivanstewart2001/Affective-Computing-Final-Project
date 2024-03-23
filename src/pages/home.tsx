@@ -7,9 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Header from "@/custom-components/Header";
+import { routeValidation } from "@/utils/routeValidation";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
-function HomePage() {
+function HomePage(props: any) {
   const router = useRouter();
 
   return (
@@ -78,5 +80,17 @@ function HomePage() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = routeValidation(
+  async (context: any) => {
+    const accessToken = JSON.parse((context as any).accessToken);
+
+    return {
+      props: {
+        accessToken,
+      },
+    };
+  }
+);
 
 export default HomePage;
