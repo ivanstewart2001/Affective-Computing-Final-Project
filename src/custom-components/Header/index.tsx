@@ -5,9 +5,9 @@ function Header() {
     <nav className="bg-white shadow">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <a href="/" className="text-xl font-bold text-gray-800">
+          <Link href="/" className="text-xl font-bold text-gray-800">
             TherHappy
-          </a>
+          </Link>
           <ul className="flex space-x-4">
             <li>
               <Link href="/login" className="text-gray-600 hover:text-gray-800">

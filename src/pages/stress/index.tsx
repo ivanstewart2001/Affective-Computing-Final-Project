@@ -31,7 +31,7 @@ function StressHomePage() {
                 into a state of peaceful reflection.
                 <br />
                 <br />
-                As you follow the gentle voice of our guide, you'll be led
+                As you follow the gentle voice of our guide, you&apos;ll be led
                 through a series of visualizations and mindfulness techniques
                 that aim to release tension, enhance inner calm, and restore
                 balance. This meditation is perfect for beginners and seasoned
@@ -63,17 +63,17 @@ function StressHomePage() {
                 breathing.
                 <br />
                 <br />
-                Over the course of a few minutes, you'll be guided through a
-                series of deep, rhythmic breaths that aim to slow down the mind,
-                relax the body, and reduce stress. This exercise is an excellent
-                tool for anyone looking to find a quick respite from the
-                stresses of everyday life or to enhance their overall
+                Over the course of a few minutes, you&apos;ll be guided through
+                a series of deep, rhythmic breaths that aim to slow down the
+                mind, relax the body, and reduce stress. This exercise is an
+                excellent tool for anyone looking to find a quick respite from
+                the stresses of everyday life or to enhance their overall
                 well-being.
                 <br />
                 <br />
-                Whether you're at home, at work, or on the go, take a moment to
-                immerse yourself in this practice. Begin this exercise now, and
-                let each breath guide you towards tranquility.
+                Whether you&apos;re at home, at work, or on the go, take a
+                moment to immerse yourself in this practice. Begin this exercise
+                now, and let each breath guide you towards tranquility.
               </CardDescription>
             </CardHeader>
 
