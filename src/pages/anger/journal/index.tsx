@@ -147,18 +147,22 @@ export const getServerSideProps: GetServerSideProps = routeValidation(
     const accessToken = JSON.parse((context as any).accessToken);
     const userId = JSON.parse((context as any).userId);
 
-    const response = await fetch(
-      "http://localhost:3000/api/fetchAllJournalEntries",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          userId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const productionUrl =
+      "https://affective-computing-final-project.vercel.app";
+    const developmentUrl = "http://localhost:3000";
+
+    const BASE_URL =
+      process.env.NODE_ENV === "development" ? developmentUrl : productionUrl;
+
+    const response = await fetch(`${BASE_URL}/api/fetchAllJournalEntries`, {
+      method: "POST",
+      body: JSON.stringify({
+        userId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const data = await response.json();
 
