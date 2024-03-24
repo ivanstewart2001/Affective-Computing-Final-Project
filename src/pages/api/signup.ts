@@ -37,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       firstName,
       lastName,
     };
-    users.insertOne(user);
+    await users.insertOne(user);
 
     await app.currentUser?.logOut();
 
