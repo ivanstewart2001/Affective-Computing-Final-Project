@@ -130,7 +130,9 @@ function JournalHomePage(props: any) {
 
         <div>
           {journalEntries && journalEntries.length > 0 ? (
-            journalEntries.map((entry: any) => <JournalEntry entry={entry} />)
+            journalEntries.map((entry: any) => (
+              <JournalEntry key={entry._id} entry={entry} />
+            ))
           ) : (
             <p>No journal entries found.</p>
           )}

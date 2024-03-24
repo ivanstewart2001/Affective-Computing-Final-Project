@@ -26,9 +26,9 @@ function AngerHomePage() {
 
               <CardDescription>
                 Journaling is your personal space to unleash, understand, and
-                conquer your anger. Whether it's a fleeting frustration or a
-                simmering rage, this journaling experience provides a safe haven
-                to express and explore your emotions.
+                conquer your anger. Whether it&apos;s a fleeting frustration or
+                a simmering rage, this journaling experience provides a safe
+                haven to express and explore your emotions.
                 <br />
                 <br />
                 Let the pages become your sounding board, as you pour out your
@@ -38,8 +38,8 @@ function AngerHomePage() {
                 your anger.
                 <br />
                 <br />
-                It's time to turn the page on anger and write your own story of
-                resilience and growth.
+                It&apos;s time to turn the page on anger and write your own
+                story of resilience and growth.
               </CardDescription>
             </CardHeader>
 
