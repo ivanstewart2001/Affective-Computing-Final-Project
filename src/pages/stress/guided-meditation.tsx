@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import ActivityWrapperWithTimer from "@/custom-components/ActivityWrapperWithTimer";
 import Header from "@/custom-components/Header";
 import { STRESS_SURVEY_QUESTIONS } from "@/utils/survey-questions/stress";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 
 const millisecondsPerStep = 20000;
@@ -20,6 +22,8 @@ const videoId = "UV0mhY2Dxr0";
 const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
 
 function GuidedMeditation() {
+  const router = useRouter();
+
   const [timer, setTimer] = useState(numberOfSeconds); // Initial timer value: 105 seconds
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const timeoutIds = useRef<NodeJS.Timeout[]>([]); // Store all timeout IDs
@@ -128,6 +132,10 @@ function GuidedMeditation() {
   return (
     <>
       <Header />
+
+      <div className="m-4">
+        <Button onClick={() => router.back()}>{"<"} Back</Button>
+      </div>
 
       <ActivityWrapperWithTimer
         title="Guided Meditation"
