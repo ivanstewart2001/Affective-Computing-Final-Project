@@ -16,6 +16,10 @@ function StressHomePage() {
     <>
       <Header />
 
+      <div className="m-4">
+        <Button onClick={() => router.back()}>{"<"} Back</Button>
+      </div>
+
       <div className="flex flex-col justify-center items-center h-screen space-y-8">
         <h1 className="text-4xl">Pick an activity</h1>
 

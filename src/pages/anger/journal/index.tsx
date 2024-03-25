@@ -117,6 +117,10 @@ function JournalHomePage(props: any) {
     <>
       <Header />
 
+      <div className="m-4">
+        <Button onClick={() => router.back()}>{"<"} Back</Button>
+      </div>
+
       <div className="flex flex-col mt-4 p-10">
         <div className="flex flex-row justify-between mb-10">
           <h1 className="text-4xl">Journal Entries</h1>

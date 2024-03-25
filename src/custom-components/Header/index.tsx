@@ -3,10 +3,16 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import * as Realm from "realm-web";
 import nookies from "nookies";
+import { getAiSdkControls } from "../../helpers/ai-sdk/loader";
 
 function Header() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  async function stopVideo() {
+    const { stop } = await getAiSdkControls();
+    stop();
+  }
 
   useEffect(() => {
     const REALM_APP_ID = process.env.NEXT_PUBLIC_REALM_APP_ID;
@@ -37,6 +43,10 @@ function Header() {
           'Invalid/Missing environment variable: "NEXT_PUBLIC_REALM_APP_ID"'
         );
       }
+
+      const intervalId = parseInt(localStorage.getItem("intervalId") || "0");
+      clearInterval(intervalId);
+      stopVideo();
 
       const app = new Realm.App({
         id: REALM_APP_ID,
