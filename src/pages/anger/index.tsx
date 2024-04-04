@@ -24,7 +24,7 @@ function AngerHomePage() {
         <h1 className="text-4xl">Pick an activity</h1>
 
         <div className="flex flex-row space-x-8">
-          <Card className="flex flex-col w-96 h-fit justify-center items-center">
+          <Card className="flex flex-col w-96 justify-center items-center">
             <CardHeader>
               <CardTitle>Journaling</CardTitle>
 
@@ -54,15 +54,32 @@ function AngerHomePage() {
             </CardFooter>
           </Card>
 
-          <Card className="flex flex-col w-96 h-fit justify-center items-center">
+          <Card className="flex flex-col w-96 justify-center items-center">
             <CardHeader>
               <CardTitle>Anger Relief Games</CardTitle>
 
-              <CardDescription>TODO</CardDescription>
+              <CardDescription>
+                Anger Relief Games offers a virtual sanctuary for individuals
+                seeking solace from the tumultuous waves of anger. Dive into a
+                world where frustration transforms into opportunity, and
+                challenges become pathways to serenity.
+                <br />
+                <br />
+                With a plethora of engaging games and activities, each
+                meticulously crafted to soothe the soul and calm the mind, Anger
+                Relief Games provides a safe space for cathartic release and
+                transformative growth. Our platform offers an array of immersive
+                experiences tailored to meet you where you are on your journey
+                to emotional well-being.
+                <br />
+                <br />
+                Say goodbye to pent-up anger and hello to a newfound sense of
+                inner peace with Anger Relief Games.
+              </CardDescription>
             </CardHeader>
 
             <CardFooter>
-              <Button onClick={() => router.push("/stress/breathing-exercise")}>
+              <Button onClick={() => router.push("/anger/games")}>
                 Select
               </Button>
             </CardFooter>
