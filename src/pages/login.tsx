@@ -8,6 +8,7 @@ import toastUtil from "@/utils/toastUtil";
 import { useToast } from "@/components/ui/use-toast";
 import * as Realm from "realm-web";
 import nookies from "nookies";
+import Cookies from "js-cookie";
 
 function LoginPage() {
   const router = useRouter();
@@ -62,6 +63,11 @@ function LoginPage() {
       onSuccess: async () => {
         setEmail("");
         setPassword("");
+
+        nookies.set(null, "loginTime", new Date().getTime().toString(), {
+          httpOnly: false,
+          path: "/",
+        });
 
         router.push("/home");
       },

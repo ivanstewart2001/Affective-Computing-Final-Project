@@ -34,8 +34,30 @@ function Header() {
     }
   }, []);
 
-  function logout() {
+  async function logout() {
     try {
+      let userId = "";
+
+      const prefix = `realm-web:app(${process.env.NEXT_PUBLIC_REALM_APP_ID})`;
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith(prefix))
+        .forEach((key) => {
+          const match = key.match(/user\((.*?)\):accessToken/);
+          if (key.includes("accessToken") && match) {
+            userId = match[1];
+          }
+        });
+
+      await fetch("/api/timeOnApp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+        }),
+      });
+
       const REALM_APP_ID = process.env.NEXT_PUBLIC_REALM_APP_ID;
 
       if (!REALM_APP_ID) {
@@ -56,16 +78,15 @@ function Header() {
 
       localStorage.clear();
 
-      const prefix = `realm-web:app(${REALM_APP_ID})`; // replace with your prefix
       Object.keys(localStorage)
         .filter((key) => key.startsWith(prefix))
         .forEach((key) => {
           localStorage.removeItem(key);
         });
 
-      const cookies = nookies.get(null);
+      const allCookies = nookies.get(null);
 
-      for (const name in cookies) {
+      for (const name in allCookies) {
         nookies.destroy(null, name);
       }
 
@@ -79,21 +100,34 @@ function Header() {
     <nav className="bg-white shadow">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <Link href="/" className="text-xl font-bold text-gray-800">
+          <Link
+            href={accessToken ? "/home" : "/"}
+            className="text-xl font-bold text-gray-800"
+          >
             TherHappy
           </Link>
           <ul className="flex space-x-4">
             {
               //if accessToken user is logged in
               accessToken ? (
-                <li>
-                  <button
-                    onClick={logout}
-                    className="text-gray-600 hover:text-gray-800"
-                  >
-                    Logout
-                  </button>
-                </li>
+                <>
+                  <li>
+                    <button
+                      onClick={() => router.push("/myReports")}
+                      className="text-gray-600 hover:text-gray-800"
+                    >
+                      My Reports
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logout}
+                      className="text-gray-600 hover:text-gray-800"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
               ) : (
                 <>
                   <li>

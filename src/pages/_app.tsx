@@ -200,6 +200,42 @@ export default function App({ Component, pageProps }: AppProps) {
       attention: attention.current,
     });
 
+    let userId = "";
+
+    const prefix = `realm-web:app(${process.env.NEXT_PUBLIC_REALM_APP_ID})`;
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith(prefix))
+      .forEach((key) => {
+        const match = key.match(/user\((.*?)\):accessToken/);
+        if (key.includes("accessToken") && match) {
+          userId = match[1];
+        }
+      });
+
+    fetch("/api/sendEmotionData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        gender: gender.current,
+        age: age.current,
+        dominantEmotion: dominantEmotion.current,
+        angry: angry.current,
+        disgust: disgust.current,
+        fear: fear.current,
+        happy: happy.current,
+        sad: sad.current,
+        surprise: surprise.current,
+        neutral: neutral.current,
+        arousal: arousal.current,
+        valence: valence.current,
+        attention: attention.current,
+        userId,
+        timeStamp: new Date().getTime(),
+      }),
+    });
+
     window.removeEventListener("CY_FACE_GENDER_RESULT", () => {
       gender.current = "";
     });

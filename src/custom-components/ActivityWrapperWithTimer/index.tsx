@@ -58,6 +58,8 @@ function ActivityWrapperWithTimer({
   const router = useRouter();
 
   const [startClicked, setStartClicked] = useState(false);
+  const [preSurveyFinalResult, setPreSurveyFinalResult] = useState(0);
+  const [postSurveyFinalResult, setPostSurveyFinalResult] = useState(0);
 
   function PreSurvey() {
     let result1 = 1;
@@ -223,6 +225,7 @@ function ActivityWrapperWithTimer({
                   2
                 );
                 console.log("Pre Survey Final Result: ", finalResult);
+                setPreSurveyFinalResult(Number(finalResult));
               }}
             >
               Submit
@@ -387,13 +390,42 @@ function ActivityWrapperWithTimer({
 
           <DialogFooter>
             <Button
-              onClick={() => {
+              onClick={async () => {
                 setPreSurveyCompleted(false);
 
                 const finalResult = ((result1 + result2 + result3) / 3).toFixed(
                   2
                 );
+
                 console.log("Post Survey Final Result: ", finalResult);
+                setPostSurveyFinalResult(Number(finalResult));
+
+                let userId = "";
+
+                const prefix = `realm-web:app(${process.env.NEXT_PUBLIC_REALM_APP_ID})`;
+                Object.keys(localStorage)
+                  .filter((key) => key.startsWith(prefix))
+                  .forEach((key) => {
+                    const match = key.match(/user\((.*?)\):accessToken/);
+                    if (key.includes("accessToken") && match) {
+                      userId = match[1];
+                    }
+                  });
+
+                await fetch("/api/sendProgressReport", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    userId,
+                    page: router.pathname.includes("breathing")
+                      ? "BREATHING"
+                      : "MEDITATION",
+                    preSurvey: preSurveyFinalResult,
+                    postSurvey: postSurveyFinalResult,
+                  }),
+                });
               }}
             >
               Submit
