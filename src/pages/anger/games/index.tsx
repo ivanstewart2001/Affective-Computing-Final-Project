@@ -48,13 +48,21 @@ function AngerHomePage() {
 
           <Card className="flex flex-col w-96 justify-center items-center">
             <CardHeader>
-              <CardTitle>Another Anger Relief Games</CardTitle>
+              <CardTitle>Boxing</CardTitle>
 
-              <CardDescription>TODO</CardDescription>
+              <CardDescription>
+                The Boxing Game is your digital platform for stress relief and
+                physical engagement. It offers a dynamic escape from the
+                pressures of daily life. Engage in virtual boxing matches, hone
+                your skills, and channel your energy in a positive, productive
+                way. Step into a vibrant arena where you can let off steam,
+                build resilience, and find moments of triumph amidst the
+                challenges of the world.
+              </CardDescription>
             </CardHeader>
 
             <CardFooter>
-              <Button onClick={() => router.push("/anger/games")}>
+              <Button onClick={() => router.push("/anger/games/boxing")}>
                 Select
               </Button>
             </CardFooter>
